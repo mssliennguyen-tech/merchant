@@ -2,10 +2,138 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Zap, Gift, BarChart3, Users, X } from 'lucide-react';
 
-import { Zap, Gift, BarChart3, Users } from 'lucide-react';
+function RegistrationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Đăng ký để nhận tư vấn</DialogTitle>
+        </DialogHeader>
+        <div className="mt-6">
+          <div className="space-y-6">
+            {/* Thông tin cá nhân */}
+            <div>
+              <h3 className="text-lg font-semibold text-foreground mb-4">Thông tin cá nhân</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Danh xưng *</label>
+                  <div className="flex gap-2">
+                    <button className="flex-1 px-3 py-2 border-2 border-destructive text-destructive rounded-lg hover:bg-destructive/5">Anh</button>
+                    <button className="flex-1 px-3 py-2 border border-border rounded-lg hover:bg-muted">Chị</button>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Họ tên *</label>
+                  <input type="text" placeholder="Nhập họ và tên" className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Số điện thoại *</label>
+                  <input type="tel" placeholder="Nhập số điện thoại" className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Email *</label>
+                  <input type="email" placeholder="Nhập email" className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Bạn biết đến Got It qua kênh nào?</label>
+                  <select className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <option>Chọn</option>
+                    <option>Facebook</option>
+                    <option>Google</option>
+                    <option>Bạn bè</option>
+                    <option>Khác</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-border"></div>
+
+            {/* Thông tin công ty */}
+            <div>
+              <h3 className="text-lg font-semibold text-foreground mb-4">Thông tin công ty</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Tên công ty</label>
+                  <input type="text" placeholder="Nhập tên công ty" className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Mã số thuế</label>
+                  <input type="text" placeholder="Nhập mã số thuế" className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Công ty thuộc lĩnh vực *</label>
+                  <select className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <option>Chọn</option>
+                    <option>Bán lẻ</option>
+                    <option>Nhà hàng</option>
+                    <option>E-commerce</option>
+                    <option>Khác</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Bạn thuộc khu vực</label>
+                  <div className="flex gap-2">
+                    <button className="flex-1 px-3 py-2 border-2 border-destructive text-destructive rounded-lg hover:bg-destructive/5 text-sm font-medium">Miền Nam & Trung</button>
+                    <button className="flex-1 px-3 py-2 border border-border rounded-lg hover:bg-muted text-sm font-medium">Miền Bắc</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-border"></div>
+
+            {/* Nội dung tư vấn */}
+            <div>
+              <h3 className="text-lg font-semibold text-foreground mb-4">Nội dung tư vấn</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Bạn cần tư vấn dịch vụ, sản phẩm gì? *</label>
+                  <select className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <option>Chọn</option>
+                    <option>Chương trình khách hàng thân thiết</option>
+                    <option>Công cụ marketing</option>
+                    <option>Analytics</option>
+                    <option>Khác</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Giá trị sản phẩm, dịch vụ cần tư vấn *</label>
+                  <select className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <option>Chọn</option>
+                    <option>Dưới 10 triệu</option>
+                    <option>10-50 triệu</option>
+                    <option>50-100 triệu</option>
+                    <option>Trên 100 triệu</option>
+                  </select>
+                </div>
+              </div>
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-foreground mb-2">Mô tả nhu cầu</label>
+                <textarea placeholder="Nhập mô tả nhu cầu" rows={4} className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"></textarea>
+              </div>
+            </div>
+
+            <button className="w-full bg-destructive text-white font-semibold py-3 rounded-lg hover:bg-destructive/90 transition-colors">
+              Đăng ký tư vấn
+            </button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -17,9 +145,22 @@ export default function Home() {
                 MP
               </span>
             </div>
-            <span className="font-semibold text-foreground">MyPoint</span>
+            <span className="font-semibold text-foreground">Merchant Portal</span>
           </Link>
 
+          <div className="flex items-center gap-3">
+            <Link href="/login">
+              <Button variant="outline" className="border-border hover:bg-muted">
+                Đăng nhập
+              </Button>
+            </Link>
+            <Button 
+              onClick={() => setIsModalOpen(true)}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
+              Đăng ký đối tác
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -112,134 +253,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Registration Form Section */}
-      <section id="register" className="py-20 px-4 sm:px-6 bg-muted/30">
-        <div className="container max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Đăng ký để nhận tư vấn
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Hãy cho chúng tôi biết thêm về kinh doanh của bạn để chúng tôi có thể cung cấp giải pháp tốt nhất
-            </p>
-          </div>
 
-          <div className="bg-white rounded-lg p-8 shadow-lg">
-            <div className="space-y-6">
-              {/* Thông tin cá nhân */}
-              <div>
-                <h3 className="text-lg font-semibold text-foreground mb-4">Thông tin cá nhân</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Danh xưng *</label>
-                    <div className="flex gap-2">
-                      <button className="flex-1 px-3 py-2 border-2 border-destructive text-destructive rounded-lg hover:bg-destructive/5">Anh</button>
-                      <button className="flex-1 px-3 py-2 border border-border rounded-lg hover:bg-muted">Chị</button>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Họ tên *</label>
-                    <input type="text" placeholder="Nhập họ và tên" className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Số điện thoại *</label>
-                    <input type="tel" placeholder="Nhập số điện thoại" className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Email *</label>
-                    <input type="email" placeholder="Nhập email" className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Bạn biết đến Got It qua kênh nào?</label>
-                    <select className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                      <option>Chọn</option>
-                      <option>Facebook</option>
-                      <option>Google</option>
-                      <option>Bạn bè</option>
-                      <option>Khác</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t border-border"></div>
-
-              {/* Thông tin công ty */}
-              <div>
-                <h3 className="text-lg font-semibold text-foreground mb-4">Thông tin công ty</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Tên công ty</label>
-                    <input type="text" placeholder="Nhập tên công ty" className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Mã số thuế</label>
-                    <input type="text" placeholder="Nhập mã số thuế" className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Công ty thuộc lĩnh vực *</label>
-                    <select className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                      <option>Chọn</option>
-                      <option>Bán lẻ</option>
-                      <option>Nhà hàng</option>
-                      <option>E-commerce</option>
-                      <option>Khác</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Bạn thuộc khu vực</label>
-                    <div className="flex gap-2">
-                      <button className="flex-1 px-3 py-2 border-2 border-destructive text-destructive rounded-lg hover:bg-destructive/5 text-sm font-medium">Miền Nam & Trung</button>
-                      <button className="flex-1 px-3 py-2 border border-border rounded-lg hover:bg-muted text-sm font-medium">Miền Bắc</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t border-border"></div>
-
-              {/* Nội dung tư vấn */}
-              <div>
-                <h3 className="text-lg font-semibold text-foreground mb-4">Nội dung tư vấn</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Bạn cần tư vấn dịch vụ, sản phẩm gì? *</label>
-                    <select className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                      <option>Chọn</option>
-                      <option>Chương trình khách hàng thân thiết</option>
-                      <option>Công cụ marketing</option>
-                      <option>Analytics</option>
-                      <option>Khác</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Giá trị sản phẩm, dịch vụ cần tư vấn *</label>
-                    <select className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                      <option>Chọn</option>
-                      <option>Dưới 10 triệu</option>
-                      <option>10-50 triệu</option>
-                      <option>50-100 triệu</option>
-                      <option>Trên 100 triệu</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <label className="block text-sm font-medium text-foreground mb-2">Mô tả nhu cầu</label>
-                  <textarea placeholder="Nhập mô tả nhu cầu" rows={4} className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"></textarea>
-                </div>
-              </div>
-
-              <button className="w-full bg-destructive text-white font-semibold py-3 rounded-lg hover:bg-destructive/90 transition-colors">
-                Đăng ký tư vấn
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
 
 
 
@@ -300,6 +314,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Registration Modal */}
+      <RegistrationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }
