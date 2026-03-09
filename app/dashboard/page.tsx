@@ -9,8 +9,42 @@ import { BarChart3, TrendingUp, Users, Gift, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
 
+const campaignTemplates = [
+  {
+    id: 'purchase-reward',
+    name: 'Phần thưởng mua hàng',
+    description: 'Khách hàng nhận điểm cho mỗi giao dịch mua hàng.',
+    icon: '🛍️',
+  },
+  {
+    id: 'double-points',
+    name: 'Khuyến mãi điểm kép',
+    description: 'Khách hàng nhận gấp đôi điểm trong thời gian quảng cáo.',
+    icon: '⚡',
+  },
+  {
+    id: 'seasonal',
+    name: 'Chiến dịch theo mùa',
+    description: 'Chạy chiến dịch khách hàng thân thiết vào các dịp lễ tết.',
+    icon: '🎉',
+  },
+  {
+    id: 'new-customer',
+    name: 'Phần thưởng khách hàng mới',
+    description: 'Tặng điểm cho người dùng lần đầu tiên đăng ký.',
+    icon: '👤',
+  },
+  {
+    id: 'employee-recognition',
+    name: 'Công nhân viên nhân',
+    description: 'Tặng điểm cho nhân viên để nhận dạng.',
+    icon: '👥',
+  },
+];
+
 export default function DashboardPage() {
   const [showTermsModal, setShowTermsModal] = useState(false);
+  const [hasNoCampaigns] = useState(true); // In real app, check if merchant has campaigns
 
   useEffect(() => {
     // Check if user has accepted terms on first login
@@ -24,6 +58,12 @@ export default function DashboardPage() {
     localStorage.setItem('termsAccepted', 'true');
     setShowTermsModal(false);
     toast.success('Cảm ơn bạn đã đồng ý với các điều khoản!');
+  };
+
+  const handleUseTemplate = (templateId: string) => {
+    toast.success(`Đang tạo chiến dịch từ mẫu...`);
+    // Navigate to campaign creation with template pre-filled
+    // router.push(`/campaigns/new?template=${templateId}`);
   };
 
   return (
@@ -43,6 +83,39 @@ export default function DashboardPage() {
           </Link>
         </Button>
       </div>
+
+      {/* Campaign Template Library - Show if no campaigns */}
+      {hasNoCampaigns && (
+        <Card className="mb-8 border border-border bg-card">
+          <CardHeader>
+            <CardTitle className="text-xl">Thư viện mẫu chiến dịch</CardTitle>
+            <CardDescription>
+              Chọn một mẫu để bắt đầu chiến dịch khách hàng thân thiết đầu tiên của bạn
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
+              {campaignTemplates.map((template) => (
+                <Card key={template.id} className="flex flex-col border border-border bg-background hover:border-primary hover:shadow-md transition-all cursor-pointer">
+                  <CardContent className="pt-6 flex flex-col flex-1">
+                    <div className="text-4xl mb-3">{template.icon}</div>
+                    <h3 className="font-semibold text-foreground mb-2">{template.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-4 flex-1">{template.description}</p>
+                    <Button
+                      onClick={() => handleUseTemplate(template.id)}
+                      variant="outline"
+                      size="sm"
+                      className="w-full border-primary text-primary hover:bg-primary/5"
+                    >
+                      Sử dụng mẫu
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Stats grid */}
       <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
