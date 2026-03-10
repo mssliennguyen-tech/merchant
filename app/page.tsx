@@ -145,7 +145,7 @@ export default function Home() {
           <Link href="/" className="inline-flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
               <span className="text-sm font-bold text-primary-foreground">
-                MP
+                M
               </span>
             </div>
             <span className="font-semibold text-foreground">Merchant Portal</span>

@@ -23,11 +23,12 @@ import { useState } from 'react';
 
 const navigationItems = [
   { href: '/dashboard', label: 'Bảng điều khiển', icon: BarChart3 },
+  { href: '/users', label: 'Quản lý Người dùng', icon: Users },
   { href: '/customer-groups', label: 'Nhóm Khách Hàng', icon: Users },
   { href: '/campaigns', label: 'Chiến dịch', icon: Zap },
   { href: '/templates', label: 'Mẫu', icon: FileText },
   { href: '/wallet', label: 'Ví điểm', icon: CreditCard },
-  { href: '/vouchers', label: 'Phiếu mua hàng', icon: Gift },
+  { href: '/vouchers', label: 'Voucher', icon: Gift },
   { href: '/reward-center', label: 'Trung tâm Phần thưởng', icon: Gift },
   { href: '/rewards', label: 'Phần thưởng', icon: Gift },
   { href: '/hr', label: 'Nhân sự', icon: BarChart3 },
