@@ -15,17 +15,27 @@ import {
   Menu,
   X,
   ChevronDown,
+  AlertCircle,
+  Users,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
 const navigationItems = [
   { href: '/dashboard', label: 'Bảng điều khiển', icon: BarChart3 },
+  { href: '/users', label: 'Quản lý Người dùng', icon: Users },
+  { href: '/customer-groups', label: 'Nhóm Khách Hàng', icon: Users },
   { href: '/campaigns', label: 'Chiến dịch', icon: Zap },
+  { href: '/templates', label: 'Mẫu', icon: FileText },
+  { href: '/wallet', label: 'Ví điểm', icon: CreditCard },
+  { href: '/vouchers', label: 'Voucher', icon: Gift },
+  { href: '/reward-center', label: 'Trung tâm Phần thưởng', icon: Gift },
   { href: '/rewards', label: 'Phần thưởng', icon: Gift },
+  { href: '/hr', label: 'Nhân sự', icon: BarChart3 },
   { href: '/transactions', label: 'Giao dịch', icon: CreditCard },
   { href: '/reports', label: 'Báo cáo', icon: FileText },
-  { href: '/settings', label: 'Cài đặt', icon: Settings },
+  { href: '/alerts', label: 'Cảnh báo', icon: AlertCircle },
+  { href: '/integrations', label: 'Tích hợp', icon: Settings },
 ];
 
 export function DashboardLayout({ children }: { children: ReactNode }) {
@@ -117,13 +127,32 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Header */}
         <header className="border-b border-border bg-card">
-          <div className="flex items-center justify-between px-4 py-4 md:px-6">
+          <div className="flex items-center justify-between gap-4 px-4 py-4 md:px-6">
             <button
               onClick={() => setSidebarOpen(true)}
               className="lg:hidden"
             >
               <Menu className="h-6 w-6" />
             </button>
+
+            {/* Quick Action Buttons */}
+            <div className="hidden sm:flex items-center gap-2">
+              <Link href="/campaigns/new">
+                <Button size="sm" variant="outline" className="text-xs">
+                  + Chiến dịch
+                </Button>
+              </Link>
+              <Link href="/reward-center">
+                <Button size="sm" variant="outline" className="text-xs">
+                  Tặng phần thưởng
+                </Button>
+              </Link>
+              <Link href="/vouchers">
+                <Button size="sm" variant="outline" className="text-xs">
+                  + Phiếu mua
+                </Button>
+              </Link>
+            </div>
 
             <div className="flex-1 md:flex-none" />
 
@@ -143,7 +172,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
               </button>
 
               {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-lg border border-border bg-card shadow-lg">
+                <div className="absolute right-0 mt-2 w-48 rounded-lg border border-border bg-card shadow-lg z-50">
                   <Link
                     href="/settings"
                     className="block px-4 py-2 text-sm hover:bg-muted rounded-t-lg"
