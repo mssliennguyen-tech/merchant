@@ -16,12 +16,14 @@ import {
   X,
   ChevronDown,
   AlertCircle,
+  Users,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
 const navigationItems = [
   { href: '/dashboard', label: 'Bảng điều khiển', icon: BarChart3 },
+  { href: '/customer-groups', label: 'Nhóm Khách Hàng', icon: Users },
   { href: '/campaigns', label: 'Chiến dịch', icon: Zap },
   { href: '/templates', label: 'Mẫu', icon: FileText },
   { href: '/wallet', label: 'Ví điểm', icon: CreditCard },
