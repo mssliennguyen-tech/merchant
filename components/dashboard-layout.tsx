@@ -15,6 +15,7 @@ import {
   Menu,
   X,
   ChevronDown,
+  AlertCircle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
@@ -22,13 +23,16 @@ import { useState } from 'react';
 const navigationItems = [
   { href: '/dashboard', label: 'Bảng điều khiển', icon: BarChart3 },
   { href: '/campaigns', label: 'Chiến dịch', icon: Zap },
+  { href: '/templates', label: 'Mẫu', icon: FileText },
   { href: '/wallet', label: 'Ví điểm', icon: CreditCard },
   { href: '/vouchers', label: 'Phiếu mua hàng', icon: Gift },
   { href: '/reward-center', label: 'Trung tâm Phần thưởng', icon: Gift },
   { href: '/rewards', label: 'Phần thưởng', icon: Gift },
+  { href: '/hr', label: 'Nhân sự', icon: BarChart3 },
   { href: '/transactions', label: 'Giao dịch', icon: CreditCard },
   { href: '/reports', label: 'Báo cáo', icon: FileText },
-  { href: '/settings', label: 'Cài đặt', icon: Settings },
+  { href: '/alerts', label: 'Cảnh báo', icon: AlertCircle },
+  { href: '/integrations', label: 'Tích hợp', icon: Settings },
 ];
 
 export function DashboardLayout({ children }: { children: ReactNode }) {
