@@ -29,7 +29,6 @@ const navigationItems = [
   { href: '/wallet', label: 'Ví điểm', icon: CreditCard },
   { href: '/vouchers', label: 'Quản lý Voucher', icon: Gift },
   { href: '/reward-center', label: 'Quản lý điểm thưởng', icon: Gift },
-  { href: '/rewards', label: 'Phần thưởng', icon: Gift },
   { href: '/hr', label: 'Nhân sự', icon: BarChart3 },
   { href: '/transactions', label: 'Giao dịch', icon: CreditCard },
   { href: '/reports', label: 'Báo cáo', icon: FileText },
