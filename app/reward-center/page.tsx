@@ -105,9 +105,9 @@ export default function RewardCenterPage() {
       {/* Page header */}
       <div className="mb-8 flex flex-col items-start justify-between md:flex-row md:items-center">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Trung tâm Phần thưởng</h1>
+          <h1 className="text-3xl font-bold text-foreground">Quản lý điểm thưởng</h1>
           <p className="text-muted-foreground mt-1">
-            Quản lý và gửi phần thưởng điểm cho khách hàng và nhân viên
+            Quản lý và phân phối phần thưởng cho khách hàng
           </p>
         </div>
         <Button
