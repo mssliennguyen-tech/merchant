@@ -16,6 +16,7 @@ const campaignTemplates = [
     description: 'Khách hàng nhận điểm cho mỗi giao dịch mua hàng.',
     icon: '🛍️',
     type: 'reward',
+    orderValue: '1 điểm / 1,000 VNĐ',
   },
   {
     id: 'double-points',
@@ -23,6 +24,7 @@ const campaignTemplates = [
     description: 'Khách hàng nhận gấp đôi điểm trong thời gian quảng cáo.',
     icon: '⚡',
     type: 'reward',
+    orderValue: '2 điểm / 1,000 VNĐ',
   },
   {
     id: 'seasonal',
@@ -30,6 +32,7 @@ const campaignTemplates = [
     description: 'Chạy chiến dịch khách hàng thân thiết vào các dịp lễ tết.',
     icon: '🎉',
     type: 'reward',
+    orderValue: '1.5 điểm / 1,000 VNĐ',
   },
   {
     id: 'new-customer',
@@ -37,6 +40,7 @@ const campaignTemplates = [
     description: 'Tặng điểm cho người dùng lần đầu tiên đăng ký.',
     icon: '👤',
     type: 'reward',
+    orderValue: 'Tặng 500 điểm trước tiên',
   },
   {
     id: 'employee-recognition',
@@ -44,6 +48,7 @@ const campaignTemplates = [
     description: 'Tặng điểm cho nhân viên để nhận dạng.',
     icon: '👥',
     type: 'reward',
+    orderValue: 'Điểm cố định theo nhân viên',
   },
   {
     id: 'spin-wheel',
@@ -51,6 +56,7 @@ const campaignTemplates = [
     description: 'Khách hàng chơi vòng quay để nhận điểm và phần thưởng.',
     icon: '🎡',
     type: 'game',
+    orderValue: 'Giải thưởng từ 100-1000 điểm',
   },
   {
     id: 'scratch-card',
@@ -58,6 +64,7 @@ const campaignTemplates = [
     description: 'Người dùng cào để phát hiện các phần thưởng ẩn.',
     icon: '🎟️',
     type: 'game',
+    orderValue: 'Giải thưởng từ 50-500 điểm',
   },
   {
     id: 'lucky-draw',
@@ -65,6 +72,7 @@ const campaignTemplates = [
     description: 'Chạy xổ số với các giải thưởng hấp dẫn.',
     icon: '🎲',
     type: 'game',
+    orderValue: 'Giải thưởng từ 100-5000 điểm',
   },
 ];
 
@@ -126,7 +134,7 @@ export default function DashboardPage() {
       {/* Page header */}
       <div className="mb-8 flex flex-col items-start justify-between md:flex-row md:items-center">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Bảng điều khiển</h1>
+          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
           <p className="text-muted-foreground mt-1">
             Chào mừng quay lại! Đây là tổng quan chương trình khách hàng thân thiết của bạn.
           </p>
@@ -138,51 +146,6 @@ export default function DashboardPage() {
           </Link>
         </Button>
       </div>
-
-      {/* Campaign Template Library - Show if no campaigns */}
-      {hasNoCampaigns && (
-        <Card className="mb-8 border border-border bg-card">
-          <CardHeader>
-            <CardTitle className="text-xl">Thư viện mẫu chiến dịch</CardTitle>
-            <CardDescription>
-              Chọn một mẫu để bắt đầu chiến dịch khách hàng thân thiết đầu tiên của bạn
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-              {campaignTemplates.map((template) => (
-                <Card 
-                  key={template.id} 
-                  className="flex flex-col border border-border bg-background hover:border-primary hover:shadow-md transition-all cursor-pointer"
-                  onClick={() => handleSelectTemplate(template)}
-                >
-                  <CardContent className="pt-6 flex flex-col flex-1">
-                    <div className="text-4xl mb-3">{template.icon}</div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-foreground mb-2">{template.name}</h3>
-                      <p className="text-sm text-muted-foreground mb-2">{template.description}</p>
-                      <span className="inline-block text-xs bg-primary/10 text-primary px-2 py-1 rounded">
-                        {template.type === 'game' ? 'Trò chơi' : 'Phần thưởng'}
-                      </span>
-                    </div>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSelectTemplate(template);
-                      }}
-                      variant="outline"
-                      size="sm"
-                      className="w-full border-primary text-primary hover:bg-primary/5 mt-4"
-                    >
-                      Cấu hình
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Stats grid */}
       <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -323,6 +286,56 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Campaign Template Library - At bottom */}
+      {hasNoCampaigns && (
+        <Card className="mb-8 border border-border bg-card">
+          <CardHeader>
+            <CardTitle className="text-xl">Thư viện mẫu chiến dịch</CardTitle>
+            <CardDescription>
+              Chọn một mẫu để bắt đầu chiến dịch khách hàng thân thiết đầu tiên của bạn
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+              {campaignTemplates.map((template) => (
+                <Card 
+                  key={template.id} 
+                  className="flex flex-col border border-border bg-background hover:border-primary hover:shadow-md transition-all cursor-pointer"
+                  onClick={() => handleSelectTemplate(template)}
+                >
+                  <CardContent className="pt-6 flex flex-col flex-1">
+                    <div className="text-4xl mb-3">{template.icon}</div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-foreground mb-2">{template.name}</h3>
+                      <p className="text-sm text-muted-foreground mb-2">{template.description}</p>
+                      <p className="text-xs font-medium text-primary bg-primary/10 inline-block px-2 py-1 rounded mb-2">
+                        {template.orderValue}
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <span className="inline-block text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                          {template.type === 'game' ? 'Trò chơi' : 'Phần thưởng'}
+                        </span>
+                      </div>
+                    </div>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSelectTemplate(template);
+                      }}
+                      variant="outline"
+                      size="sm"
+                      className="w-full border-primary text-primary hover:bg-primary/5 mt-4"
+                    >
+                      Cấu hình
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Configuration Modal */}
       {showConfigModal && (

@@ -135,8 +135,6 @@ function RegistrationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =
 }
 
 export default function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -157,12 +155,11 @@ export default function Home() {
                 Đăng nhập
               </Button>
             </Link>
-            <Button 
-              onClick={() => setIsModalOpen(true)}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground"
-            >
-              Đăng ký đối tác
-            </Button>
+            <Link href="/register-partner">
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                Đăng ký đối tác
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
@@ -318,8 +315,6 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* Registration Modal */}
-      <RegistrationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }
