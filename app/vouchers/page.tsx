@@ -98,9 +98,9 @@ export default function VouchersPage() {
       {/* Page header */}
       <div className="mb-8 flex flex-col items-start justify-between md:flex-row md:items-center">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Quản lý Phiếu mua hàng</h1>
+          <h1 className="text-3xl font-bold text-foreground">Quản lý Voucher</h1>
           <p className="text-muted-foreground mt-1">
-            Tạo và quản lý các phiếu mua hàng để khách hàng hoàn lại
+            Tạo và quản lý các voucher cho chương trình khách hàng thân thiết của bạn
           </p>
         </div>
         <Button
