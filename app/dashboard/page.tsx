@@ -116,19 +116,6 @@ export default function DashboardPage() {
         </Button>
       </div>
 
-      {/* Logo Section */}
-      <div className="mb-8 p-4 rounded-lg bg-gradient-to-r from-primary to-primary/80">
-        <div className="flex items-center gap-3">
-          <div className="h-12 w-12 rounded-lg bg-white flex items-center justify-center">
-            <span className="text-lg font-bold text-primary">M</span>
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-white">Merchant Portal</h2>
-            <p className="text-primary-foreground/80 text-sm">Quản lý chương trình khách hàng thân thiết</p>
-          </div>
-        </div>
-      </div>
-
       {/* Stats grid */}
       <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {[
