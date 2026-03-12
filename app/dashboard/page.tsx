@@ -12,67 +12,31 @@ import { toast } from 'sonner';
 const campaignTemplates = [
   {
     id: 'purchase-reward',
-    name: 'Phần thưởng mua hàng',
-    description: 'Khách hàng nhận điểm cho mỗi giao dịch mua hàng.',
+    name: 'Mua hàng tích điểm',
+    description: 'Khách hàng nhận điểm khi mua hàng tùy theo giá trị đơn hàng.',
     icon: '🛍️',
     type: 'reward',
-    orderValue: '1 điểm / 1,000 VNĐ',
   },
   {
-    id: 'double-points',
-    name: 'Khuyến mãi điểm kép',
-    description: 'Khách hàng nhận gấp đôi điểm trong thời gian quảng cáo.',
-    icon: '⚡',
+    id: 'checkin-reward',
+    name: 'Khách hàng check in nhận thưởng',
+    description: 'Khách hàng check in hàng ngày để nhận điểm và phần thưởng.',
+    icon: '📍',
     type: 'reward',
-    orderValue: '2 điểm / 1,000 VNĐ',
   },
   {
-    id: 'seasonal',
-    name: 'Chiến dịch theo mùa',
-    description: 'Chạy chiến dịch khách hàng thân thiết vào các dịp lễ tết.',
-    icon: '🎉',
-    type: 'reward',
-    orderValue: '1.5 điểm / 1,000 VNĐ',
-  },
-  {
-    id: 'new-customer',
-    name: 'Phần thưởng khách hàng mới',
-    description: 'Tặng điểm cho người dùng lần đầu tiên đăng ký.',
-    icon: '👤',
-    type: 'reward',
-    orderValue: 'Tặng 500 điểm trước tiên',
-  },
-  {
-    id: 'employee-recognition',
-    name: 'Công nhân viên nhân',
-    description: 'Tặng điểm cho nhân viên để nhận dạng.',
+    id: 'employee-reward',
+    name: 'Thưởng nhân viên',
+    description: 'Tặng điểm và phần thưởng cho nhân viên dựa trên hiệu suất.',
     icon: '👥',
     type: 'reward',
-    orderValue: 'Điểm cố định theo nhân viên',
   },
   {
     id: 'spin-wheel',
-    name: 'Vòng quay may mắn',
-    description: 'Khách hàng chơi vòng quay để nhận điểm và phần thưởng.',
+    name: 'Game vòng quay may mắn',
+    description: 'Khách hàng chơi vòng quay 6 phần để nhận điểm hoặc voucher.',
     icon: '🎡',
     type: 'game',
-    orderValue: 'Giải thưởng từ 100-1000 điểm',
-  },
-  {
-    id: 'scratch-card',
-    name: 'Thẻ cào trúng thưởng',
-    description: 'Người dùng cào để phát hiện các phần thưởng ẩn.',
-    icon: '🎟️',
-    type: 'game',
-    orderValue: 'Giải thưởng từ 50-500 điểm',
-  },
-  {
-    id: 'lucky-draw',
-    name: 'Xổ số may mắn',
-    description: 'Chạy xổ số với các giải thưởng hấp dẫn.',
-    icon: '🎲',
-    type: 'game',
-    orderValue: 'Giải thưởng từ 100-5000 điểm',
   },
 ];
 
@@ -90,11 +54,16 @@ export default function DashboardPage() {
     pointsPerAction: 0,
     dailyLimit: 0,
     maxPerUser: 0,
-    gameSettings: {
-      wheelSegments: 6,
-      prizes: ['100 điểm', '200 điểm', '500 điểm'],
-      winRate: 50,
-    },
+    orderValue: '1',
+    wheelType: 'points',
+    wheelSegments: [
+      { type: 'points', value: 100 },
+      { type: 'points', value: 200 },
+      { type: 'points', value: 300 },
+      { type: 'voucher', value: 50 },
+      { type: 'voucher', value: 100 },
+      { type: 'points', value: 500 },
+    ],
   });
 
   useEffect(() => {
@@ -145,6 +114,19 @@ export default function DashboardPage() {
             Chiến dịch mới
           </Link>
         </Button>
+      </div>
+
+      {/* Logo Section */}
+      <div className="mb-8 p-4 rounded-lg bg-gradient-to-r from-primary to-primary/80">
+        <div className="flex items-center gap-3">
+          <div className="h-12 w-12 rounded-lg bg-white flex items-center justify-center">
+            <span className="text-lg font-bold text-primary">M</span>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-white">Merchant Portal</h2>
+            <p className="text-primary-foreground/80 text-sm">Quản lý chương trình khách hàng thân thiết</p>
+          </div>
+        </div>
       </div>
 
       {/* Stats grid */}
@@ -238,14 +220,14 @@ export default function DashboardPage() {
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
         <Card className="border border-border bg-card">
           <CardHeader>
-            <CardTitle className="text-lg">Top Campaigns</CardTitle>
+            <CardTitle className="text-lg">Chiến dịch hàng đầu</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               {[
-                { name: 'Summer Sale', points: '450K', status: 'Active' },
-                { name: 'Birthday Bonus', points: '320K', status: 'Active' },
-                { name: 'Referral Program', points: '210K', status: 'Pending' },
+                { name: 'Khuyến mãi hè', points: '450K', status: 'Hoạt động' },
+                { name: 'Thưởng sinh nhật', points: '320K', status: 'Hoạt động' },
+                { name: 'Chương trình giới thiệu', points: '210K', status: 'Nháp' },
               ].map((campaign, i) => (
                 <div key={i} className="flex items-center justify-between pb-2 border-b border-border last:border-0">
                   <div className="flex-1">
@@ -253,7 +235,7 @@ export default function DashboardPage() {
                     <p className="text-xs text-muted-foreground">{campaign.points}</p>
                   </div>
                   <span className={`text-xs font-medium px-2 py-1 rounded ${
-                    campaign.status === 'Active'
+                    campaign.status === 'Hoạt động'
                       ? 'bg-accent/20 text-accent'
                       : 'bg-muted text-muted-foreground'
                   }`}>
@@ -416,12 +398,29 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* Campaign Settings */}
-              <div className="space-y-4">
-                <h3 className="font-semibold text-foreground">Cài đặt chiến dịch</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Purchase Reward Settings */}
+              {selectedTemplate?.id === 'purchase-reward' && (
+                <div className="space-y-4 border-t border-border pt-4">
+                  <h3 className="font-semibold text-foreground">Giá trị đơn hàng</h3>
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Điểm mỗi lần</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">Tỷ lệ tích điểm (VNĐ)</label>
+                    <input
+                      type="text"
+                      value={campaignConfig.orderValue}
+                      onChange={(e) => setCampaignConfig({ ...campaignConfig, orderValue: e.target.value })}
+                      className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      placeholder="VD: 1 (1 điểm/1000 VNĐ)"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Check-in Reward Settings */}
+              {selectedTemplate?.id === 'checkin-reward' && (
+                <div className="space-y-4 border-t border-border pt-4">
+                  <h3 className="font-semibold text-foreground">Cài đặt check-in</h3>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">Điểm nhận mỗi check-in</label>
                     <input
                       type="number"
                       value={campaignConfig.pointsPerAction}
@@ -430,60 +429,104 @@ export default function DashboardPage() {
                       placeholder="0"
                     />
                   </div>
+                </div>
+              )}
+
+              {/* Employee Reward Settings */}
+              {selectedTemplate?.id === 'employee-reward' && (
+                <div className="space-y-4 border-t border-border pt-4">
+                  <h3 className="font-semibold text-foreground">Cài đặt thưởng nhân viên</h3>
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Giới hạn hàng ngày</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">Điểm thưởng</label>
                     <input
                       type="number"
-                      value={campaignConfig.dailyLimit}
-                      onChange={(e) => setCampaignConfig({ ...campaignConfig, dailyLimit: parseInt(e.target.value) || 0 })}
-                      className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="0"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Max/Người dùng</label>
-                    <input
-                      type="number"
-                      value={campaignConfig.maxPerUser}
-                      onChange={(e) => setCampaignConfig({ ...campaignConfig, maxPerUser: parseInt(e.target.value) || 0 })}
+                      value={campaignConfig.pointsPerAction}
+                      onChange={(e) => setCampaignConfig({ ...campaignConfig, pointsPerAction: parseInt(e.target.value) || 0 })}
                       className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="0"
                     />
                   </div>
                 </div>
-              </div>
+              )}
 
-              {/* Game Settings - Only show for game templates */}
-              {selectedTemplate?.type === 'game' && (
+              {/* Spin Wheel Settings */}
+              {selectedTemplate?.id === 'spin-wheel' && (
                 <div className="space-y-4 border-t border-border pt-4">
-                  <h3 className="font-semibold text-foreground">Cài đặt trò chơi</h3>
+                  <h3 className="font-semibold text-foreground">Cài đặt vòng quay</h3>
+                  
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Số phần trong vòng quay</label>
-                    <input
-                      type="number"
-                      value={campaignConfig.gameSettings.wheelSegments}
-                      onChange={(e) => setCampaignConfig({
-                        ...campaignConfig,
-                        gameSettings: { ...campaignConfig.gameSettings, wheelSegments: parseInt(e.target.value) || 6 }
-                      })}
-                      className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                      min="3"
-                      max="12"
-                    />
+                    <label className="block text-sm font-medium text-foreground mb-3">Loại phần thưởng</label>
+                    <div className="space-y-2">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          value="points"
+                          checked={campaignConfig.wheelType === 'points'}
+                          onChange={(e) => setCampaignConfig({ ...campaignConfig, wheelType: e.target.value })}
+                          className="w-4 h-4"
+                        />
+                        <span className="text-sm">Chỉ Điểm</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          value="voucher"
+                          checked={campaignConfig.wheelType === 'voucher'}
+                          onChange={(e) => setCampaignConfig({ ...campaignConfig, wheelType: e.target.value })}
+                          className="w-4 h-4"
+                        />
+                        <span className="text-sm">Chỉ Voucher</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          value="both"
+                          checked={campaignConfig.wheelType === 'both'}
+                          onChange={(e) => setCampaignConfig({ ...campaignConfig, wheelType: e.target.value })}
+                          className="w-4 h-4"
+                        />
+                        <span className="text-sm">Điểm & Voucher</span>
+                      </label>
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Tỷ lệ thắng (%)</label>
-                    <input
-                      type="number"
-                      value={campaignConfig.gameSettings.winRate}
-                      onChange={(e) => setCampaignConfig({
-                        ...campaignConfig,
-                        gameSettings: { ...campaignConfig.gameSettings, winRate: parseInt(e.target.value) || 50 }
-                      })}
-                      className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                      min="0"
-                      max="100"
-                    />
+
+                  <div className="pt-4 border-t border-border">
+                    <h4 className="text-sm font-medium text-foreground mb-3">Cấu hình 6 phần vòng quay</h4>
+                    <div className="space-y-3">
+                      {campaignConfig.wheelSegments.map((segment, idx) => (
+                        <div key={idx} className="flex gap-3 items-end">
+                          <div className="flex-1">
+                            <label className="block text-xs font-medium text-muted-foreground mb-1">Phần {idx + 1}</label>
+                            <select
+                              value={segment.type}
+                              onChange={(e) => {
+                                const newSegments = [...campaignConfig.wheelSegments];
+                                newSegments[idx].type = e.target.value;
+                                setCampaignConfig({ ...campaignConfig, wheelSegments: newSegments });
+                              }}
+                              className="w-full px-2 py-2 border border-border rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                            >
+                              <option value="points">Điểm</option>
+                              <option value="voucher">Voucher</option>
+                            </select>
+                          </div>
+                          <div className="flex-1">
+                            <label className="block text-xs font-medium text-muted-foreground mb-1">Giá trị</label>
+                            <input
+                              type="number"
+                              value={segment.value}
+                              onChange={(e) => {
+                                const newSegments = [...campaignConfig.wheelSegments];
+                                newSegments[idx].value = parseInt(e.target.value) || 0;
+                                setCampaignConfig({ ...campaignConfig, wheelSegments: newSegments });
+                              }}
+                              className="w-full px-2 py-2 border border-border rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                              placeholder="0"
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
