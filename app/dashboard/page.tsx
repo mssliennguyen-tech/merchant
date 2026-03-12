@@ -54,7 +54,11 @@ export default function DashboardPage() {
     pointsPerAction: 0,
     dailyLimit: 0,
     maxPerUser: 0,
-    orderValue: '1',
+    orderValue: '',
+    pointsMethod: 'ratio',
+    pointsRatio: '',
+    pointsAmount: 0,
+    employeeTarget: '',
     wheelType: 'points',
     wheelSegments: [
       { type: 'points', value: 100 },
@@ -388,17 +392,74 @@ export default function DashboardPage() {
               {/* Purchase Reward Settings */}
               {selectedTemplate?.id === 'purchase-reward' && (
                 <div className="space-y-4 border-t border-border pt-4">
-                  <h3 className="font-semibold text-foreground">Giá trị đơn hàng</h3>
+                  <h3 className="font-semibold text-foreground">Cài đặt mua hàng tích điểm</h3>
+                  
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Tỷ lệ tích điểm (VNĐ)</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">Giá trị đơn hàng *</label>
                     <input
-                      type="text"
+                      type="number"
                       value={campaignConfig.orderValue}
                       onChange={(e) => setCampaignConfig({ ...campaignConfig, orderValue: e.target.value })}
                       className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="VD: 1 (1 điểm/1000 VNĐ)"
+                      placeholder="Nhập giá trị hóa đơn"
+                      min="0"
                     />
                   </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-3">Tích điểm cho *</label>
+                    <div className="space-y-2">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          value="ratio"
+                          checked={campaignConfig.pointsMethod === 'ratio'}
+                          onChange={(e) => setCampaignConfig({ ...campaignConfig, pointsMethod: e.target.value })}
+                          className="w-4 h-4"
+                        />
+                        <span className="text-sm">Tỷ lệ tích điểm (%)</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          value="amount"
+                          checked={campaignConfig.pointsMethod === 'amount'}
+                          onChange={(e) => setCampaignConfig({ ...campaignConfig, pointsMethod: e.target.value })}
+                          className="w-4 h-4"
+                        />
+                        <span className="text-sm">Số điểm được tích</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  {campaignConfig.pointsMethod === 'ratio' && (
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">Tỷ lệ tích điểm</label>
+                      <input
+                        type="number"
+                        value={campaignConfig.pointsRatio}
+                        onChange={(e) => setCampaignConfig({ ...campaignConfig, pointsRatio: e.target.value })}
+                        className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="nhập % tích điểm cho người dùng"
+                        min="0"
+                        max="100"
+                      />
+                    </div>
+                  )}
+
+                  {campaignConfig.pointsMethod === 'amount' && (
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">Số điểm được tích</label>
+                      <input
+                        type="number"
+                        value={campaignConfig.pointsAmount}
+                        onChange={(e) => setCampaignConfig({ ...campaignConfig, pointsAmount: parseInt(e.target.value) || 0 })}
+                        className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="nhập Số tiền tích điểm/ đơn hàng"
+                        min="0"
+                      />
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -423,14 +484,31 @@ export default function DashboardPage() {
               {selectedTemplate?.id === 'employee-reward' && (
                 <div className="space-y-4 border-t border-border pt-4">
                   <h3 className="font-semibold text-foreground">Cài đặt thưởng nhân viên</h3>
+                  
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Điểm thưởng</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">Đối tượng chiến dịch *</label>
+                    <select
+                      value={campaignConfig.employeeTarget}
+                      onChange={(e) => setCampaignConfig({ ...campaignConfig, employeeTarget: e.target.value })}
+                      className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <option value="">Chọn đối tượng</option>
+                      <option value="department">Phòng/Ban</option>
+                      <option value="branch">Chi nhánh</option>
+                      <option value="all">Tất cả nhân viên</option>
+                      <option value="leader">Leader</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">Điểm thưởng *</label>
                     <input
                       type="number"
                       value={campaignConfig.pointsPerAction}
                       onChange={(e) => setCampaignConfig({ ...campaignConfig, pointsPerAction: parseInt(e.target.value) || 0 })}
                       className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="0"
+                      min="0"
                     />
                   </div>
                 </div>
