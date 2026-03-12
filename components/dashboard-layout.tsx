@@ -33,7 +33,6 @@ const navigationItems = [
   { href: '/transactions', label: 'Giao dịch', icon: CreditCard },
   { href: '/reports', label: 'Báo cáo', icon: FileText },
   { href: '/alerts', label: 'Cảnh báo', icon: AlertCircle },
-  { href: '/integrations', label: 'Tích hợp', icon: Settings },
 ];
 
 export function DashboardLayout({ children }: { children: ReactNode }) {

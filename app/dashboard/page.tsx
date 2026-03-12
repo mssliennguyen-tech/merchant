@@ -105,19 +105,11 @@ export default function DashboardPage() {
   return (
     <DashboardLayout>
       {/* Page header */}
-      <div className="mb-8 flex flex-col items-start justify-between md:flex-row md:items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-          <p className="text-muted-foreground mt-1">
-            Chào mừng quay lại! Đây là tổng quan chương trình khách hàng thân thiết của bạn.
-          </p>
-        </div>
-        <Button asChild className="mt-4 md:mt-0 bg-primary hover:bg-primary/90">
-          <Link href="/campaigns/new" className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            Chiến dịch mới
-          </Link>
-        </Button>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+        <p className="text-muted-foreground mt-1">
+          Chào mừng quay lại! Đây là tổng quan chương trình khách hàng thân thiết của bạn.
+        </p>
       </div>
 
       {/* Stats grid */}

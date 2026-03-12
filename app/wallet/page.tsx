@@ -174,21 +174,6 @@ export default function WalletPage() {
       {/* Action Buttons */}
       <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:gap-3">
         <Button
-          onClick={() => setShowBuyModal(true)}
-          className="flex items-center gap-2 bg-primary hover:bg-primary/90"
-        >
-          <Plus className="h-4 w-4" />
-          Mua thêm điểm
-        </Button>
-        <Button
-          onClick={handleTransfer}
-          variant="outline"
-          className="flex items-center gap-2"
-        >
-          <ArrowRight className="h-4 w-4" />
-          Chuyển điểm
-        </Button>
-        <Button
           onClick={handleExportHistory}
           variant="outline"
           className="flex items-center gap-2"

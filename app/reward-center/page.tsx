@@ -157,20 +157,11 @@ export default function RewardCenterPage() {
   return (
     <DashboardLayout>
       {/* Page header */}
-      <div className="mb-8 flex flex-col items-start justify-between md:flex-row md:items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Quản lý điểm thưởng</h1>
-          <p className="text-muted-foreground mt-1">
-            Quản lý và phân phối phần thưởng cho khách hàng
-          </p>
-        </div>
-        <Button
-          onClick={() => setShowRewardModal(true)}
-          className="mt-4 md:mt-0 flex items-center gap-2 bg-primary hover:bg-primary/90"
-        >
-          <Plus className="h-4 w-4" />
-          Tặng phần thưởng
-        </Button>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-foreground">Quản lý điểm thưởng</h1>
+        <p className="text-muted-foreground mt-1">
+          Quản lý và phân phối phần thưởng cho khách hàng
+        </p>
       </div>
 
       {/* Reward Tabs */}
