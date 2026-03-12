@@ -486,21 +486,6 @@ export default function DashboardPage() {
                   <h3 className="font-semibold text-foreground">Cài đặt thưởng nhân viên</h3>
                   
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Đối tượng chiến dịch *</label>
-                    <select
-                      value={campaignConfig.employeeTarget}
-                      onChange={(e) => setCampaignConfig({ ...campaignConfig, employeeTarget: e.target.value })}
-                      className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    >
-                      <option value="">Chọn đối tượng</option>
-                      <option value="department">Phòng/Ban</option>
-                      <option value="branch">Chi nhánh</option>
-                      <option value="all">Tất cả nhân viên</option>
-                      <option value="leader">Leader</option>
-                    </select>
-                  </div>
-
-                  <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Điểm thưởng *</label>
                     <input
                       type="number"

@@ -66,18 +66,31 @@ export default function RewardCenterPage() {
   const [activeTab, setActiveTab] = useState<'user' | 'batch' | 'campaign' | 'department'>('user');
   const [showRewardModal, setShowRewardModal] = useState(false);
   const [rewardType, setRewardType] = useState('user');
+  const [selectedCampaigns, setSelectedCampaigns] = useState<string[]>([]);
+  const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
   const [formData, setFormData] = useState({
-    userId: '',
-    userName: '',
+    phoneNumber: '',
     points: '',
     reason: '',
-    campaign: '',
-    department: '',
   });
 
+  const campaigns = [
+    { id: 'summer', name: 'Khuyến mãi hè' },
+    { id: 'birthday', name: 'Thưởng sinh nhật' },
+    { id: 'referral', name: 'Chương trình giới thiệu' },
+    { id: 'vip', name: 'VIP Độc quyền' },
+  ];
+
+  const departments = [
+    { id: 'sales', name: 'Phòng Bán hàng' },
+    { id: 'marketing', name: 'Phòng Marketing' },
+    { id: 'customer', name: 'Phòng Chăm sóc khách hàng' },
+    { id: 'it', name: 'Phòng IT' },
+  ];
+
   const handleRewardUser = () => {
-    if (!formData.userId && !formData.userName) {
-      toast.error('Vui lòng chọn hoặc nhập ID/tên người dùng');
+    if (!formData.phoneNumber) {
+      toast.error('Vui lòng nhập số điện thoại');
       return;
     }
     if (!formData.points) {
@@ -87,13 +100,54 @@ export default function RewardCenterPage() {
     toast.success('Phần thưởng đã được gửi thành công!');
     setShowRewardModal(false);
     setFormData({
-      userId: '',
-      userName: '',
+      phoneNumber: '',
       points: '',
       reason: '',
-      campaign: '',
-      department: '',
     });
+  };
+
+  const handleToggleCampaign = (campaignId: string) => {
+    setSelectedCampaigns(prev => 
+      prev.includes(campaignId) 
+        ? prev.filter(id => id !== campaignId)
+        : [...prev, campaignId]
+    );
+  };
+
+  const handleToggleDepartment = (departmentId: string) => {
+    setSelectedDepartments(prev => 
+      prev.includes(departmentId) 
+        ? prev.filter(id => id !== departmentId)
+        : [...prev, departmentId]
+    );
+  };
+
+  const handleRewardByCampaign = () => {
+    if (selectedCampaigns.length === 0) {
+      toast.error('Vui lòng chọn ít nhất 1 chiến dịch');
+      return;
+    }
+    if (!formData.points) {
+      toast.error('Vui lòng nhập số điểm');
+      return;
+    }
+    toast.success(`Phần thưởng đã được gửi cho ${selectedCampaigns.length} chiến dịch!`);
+    setSelectedCampaigns([]);
+    setFormData({ phoneNumber: '', points: '', reason: '' });
+  };
+
+  const handleRewardByDepartment = () => {
+    if (selectedDepartments.length === 0) {
+      toast.error('Vui lòng chọn ít nhất 1 phòng ban');
+      return;
+    }
+    if (!formData.points) {
+      toast.error('Vui lòng nhập số điểm');
+      return;
+    }
+    toast.success(`Phần thưởng đã được gửi cho ${selectedDepartments.length} phòng ban!`);
+    setSelectedDepartments([]);
+    setFormData({ phoneNumber: '', points: '', reason: '' });
   };
 
   const handleBatchUpload = () => {
@@ -146,31 +200,27 @@ export default function RewardCenterPage() {
         <Card className="mb-8 border border-border bg-card">
           <CardHeader>
             <CardTitle>Tặng phần thưởng cho người dùng</CardTitle>
-            <CardDescription>Tìm kiếm người dùng và tặng điểm cho họ</CardDescription>
+            <CardDescription>Tìm kiếm người dùng theo số điện thoại và tặng điểm cho họ</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-foreground">ID Người dùng</Label>
-                  <Input
-                    placeholder="e.g. USR12345"
-                    className="mt-1.5 border-border bg-background text-foreground"
-                  />
-                </div>
-                <div>
-                  <Label className="text-foreground">Tên người dùng</Label>
-                  <Input
-                    placeholder="Nhập tên người dùng"
-                    className="mt-1.5 border-border bg-background text-foreground"
-                  />
-                </div>
+              <div>
+                <Label className="text-foreground">Số điện thoại *</Label>
+                <Input
+                  type="tel"
+                  placeholder="0901234567"
+                  value={formData.phoneNumber}
+                  onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                  className="mt-1.5 border-border bg-background text-foreground"
+                />
               </div>
               <div>
-                <Label className="text-foreground">Số điểm</Label>
+                <Label className="text-foreground">Số điểm *</Label>
                 <Input
                   type="number"
                   placeholder="10000"
+                  value={formData.points}
+                  onChange={(e) => setFormData({ ...formData, points: e.target.value })}
                   className="mt-1.5 border-border bg-background text-foreground"
                 />
               </div>
@@ -178,11 +228,13 @@ export default function RewardCenterPage() {
                 <Label className="text-foreground">Lý do tặng</Label>
                 <Textarea
                   placeholder="Nhập lý do tặng phần thưởng"
+                  value={formData.reason}
+                  onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
                   className="mt-1.5 border-border bg-background text-foreground resize-none"
                   rows={3}
                 />
               </div>
-              <Button className="w-full bg-primary hover:bg-primary/90">
+              <Button onClick={handleRewardUser} className="w-full bg-primary hover:bg-primary/90">
                 Gửi phần thưởng
               </Button>
             </div>
@@ -227,33 +279,42 @@ USR003,25000,Referral bonus`}
         <Card className="mb-8 border border-border bg-card">
           <CardHeader>
             <CardTitle>Tặng phần thưởng theo chiến dịch</CardTitle>
-            <CardDescription>Gửi phần thưởng tự động cho người dùng tham gia chiến dịch</CardDescription>
+            <CardDescription>Chọn 1 hoặc nhiều chiến dịch để gửi phần thưởng tự động cho người dùng tham gia</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div>
-                <Label className="text-foreground">Chọn chiến dịch *</Label>
-                <Select>
-                  <option value="">Chọn chiến dịch</option>
-                  <option>Summer Sale Campaign</option>
-                  <option>Birthday Month Campaign</option>
-                  <option>Referral Program</option>
-                </Select>
+                <Label className="text-foreground mb-3 block">Chọn chiến dịch *</Label>
+                <div className="space-y-2 p-4 border border-border rounded-lg">
+                  {campaigns.map(campaign => (
+                    <label key={campaign.id} className="flex items-center gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={selectedCampaigns.includes(campaign.id)}
+                        onChange={() => handleToggleCampaign(campaign.id)}
+                        className="w-4 h-4 rounded border-border"
+                      />
+                      <span className="text-sm text-foreground">{campaign.name}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
               <div>
                 <Label className="text-foreground">Số điểm cho mỗi người tham gia *</Label>
                 <Input
                   type="number"
                   placeholder="50000"
+                  value={formData.points}
+                  onChange={(e) => setFormData({ ...formData, points: e.target.value })}
                   className="mt-1.5 border-border bg-background text-foreground"
                 />
               </div>
               <div className="bg-muted/50 p-4 rounded-lg">
                 <p className="text-sm text-muted-foreground">
-                  Sẽ tặng phần thưởng cho ~500 người dùng từ chiến dịch này
+                  Sẽ tặng phần thưởng cho người dùng từ {selectedCampaigns.length > 0 ? selectedCampaigns.length : 'các'} chiến dịch được chọn
                 </p>
               </div>
-              <Button className="w-full bg-primary hover:bg-primary/90">
+              <Button onClick={handleRewardByCampaign} className="w-full bg-primary hover:bg-primary/90">
                 Gửi phần thưởng
               </Button>
             </div>
@@ -265,25 +326,33 @@ USR003,25000,Referral bonus`}
         <Card className="mb-8 border border-border bg-card">
           <CardHeader>
             <CardTitle>Tặng phần thưởng theo phòng ban</CardTitle>
-            <CardDescription>Gửi phần thưởng cho nhân viên của một phòng ban</CardDescription>
+            <CardDescription>Chọn 1 hoặc nhiều phòng ban để gửi phần thưởng cho nhân viên</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div>
-                <Label className="text-foreground">Chọn phòng ban *</Label>
-                <Select>
-                  <option value="">Chọn phòng ban</option>
-                  <option>Bộ phận Bán hàng</option>
-                  <option>Bộ phận Tiếp thị</option>
-                  <option>Bộ phận IT</option>
-                  <option>Bộ phận Tài chính</option>
-                </Select>
+                <Label className="text-foreground mb-3 block">Chọn phòng ban *</Label>
+                <div className="space-y-2 p-4 border border-border rounded-lg">
+                  {departments.map(department => (
+                    <label key={department.id} className="flex items-center gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={selectedDepartments.includes(department.id)}
+                        onChange={() => handleToggleDepartment(department.id)}
+                        className="w-4 h-4 rounded border-border"
+                      />
+                      <span className="text-sm text-foreground">{department.name}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
               <div>
                 <Label className="text-foreground">Số điểm cho mỗi nhân viên *</Label>
                 <Input
                   type="number"
                   placeholder="100000"
+                  value={formData.points}
+                  onChange={(e) => setFormData({ ...formData, points: e.target.value })}
                   className="mt-1.5 border-border bg-background text-foreground"
                 />
               </div>
@@ -291,16 +360,18 @@ USR003,25000,Referral bonus`}
                 <Label className="text-foreground">Lý do tặng (cùng cho tất cả)</Label>
                 <Textarea
                   placeholder="e.g. Thưởng hiệu suất quý 1"
+                  value={formData.reason}
+                  onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
                   className="mt-1.5 border-border bg-background text-foreground resize-none"
                   rows={3}
                 />
               </div>
               <div className="bg-muted/50 p-4 rounded-lg">
                 <p className="text-sm text-muted-foreground">
-                  Sẽ tặng phần thưởng cho ~25 nhân viên trong phòng ban này
+                  Sẽ tặng phần thưởng cho nhân viên từ {selectedDepartments.length > 0 ? selectedDepartments.length : 'các'} phòng ban được chọn
                 </p>
               </div>
-              <Button className="w-full bg-primary hover:bg-primary/90">
+              <Button onClick={handleRewardByDepartment} className="w-full bg-primary hover:bg-primary/90">
                 Gửi phần thưởng
               </Button>
             </div>

@@ -120,19 +120,11 @@ export default function CampaignsPage() {
   return (
     <DashboardLayout>
       {/* Page header */}
-      <div className="mb-8 flex flex-col items-start justify-between md:flex-row md:items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Chiến dịch</h1>
-          <p className="text-muted-foreground mt-1">
-            Tạo và quản lý các chiến dịch khách hàng thân thiết của bạn
-          </p>
-        </div>
-        <Button asChild className="mt-4 md:mt-0 bg-primary hover:bg-primary/90">
-          <Link href="/campaigns/new" className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            Tạo chiến dịch
-          </Link>
-        </Button>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-foreground">Chiến dịch</h1>
+        <p className="text-muted-foreground mt-1">
+          Tạo và quản lý các chiến dịch khách hàng thân thiết của bạn
+        </p>
       </div>
 
       {/* Filters */}

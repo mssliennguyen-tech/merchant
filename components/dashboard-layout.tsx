@@ -136,18 +136,18 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
             {/* Quick Action Buttons */}
             <div className="hidden sm:flex items-center gap-2">
               <Link href="/campaigns/new">
-                <Button size="sm" variant="outline" className="text-xs">
+                <Button size="sm" className="text-xs font-bold bg-primary hover:bg-primary/90 text-white">
                   + Chiến dịch
                 </Button>
               </Link>
               <Link href="/reward-center">
-                <Button size="sm" variant="outline" className="text-xs">
-                  Tặng phần thưởng
+                <Button size="sm" className="text-xs font-bold bg-primary hover:bg-primary/90 text-white">
+                  + Tặng phần thưởng
                 </Button>
               </Link>
               <Link href="/vouchers">
-                <Button size="sm" variant="outline" className="text-xs">
-                  + Phiếu mua
+                <Button size="sm" className="text-xs font-bold bg-primary hover:bg-primary/90 text-white">
+                  + Voucher
                 </Button>
               </Link>
             </div>
