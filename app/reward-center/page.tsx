@@ -14,6 +14,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Plus, Upload } from 'lucide-react';
 import { toast } from 'sonner';
 
+// Fixed SMS message template for all reward distribution methods
+const SMS_MESSAGE_TEMPLATE = (points: string = '___') => {
+  return `Bạn đã nhận được ${points} Points từ Highland coffee. Hãy truy cập trang web https://example.com để nhận điểm.`;
+};
+
 const rewardHistory = [
   {
     id: 'RWD001',
@@ -371,13 +376,13 @@ export default function RewardCenterPage() {
                   </label>
                 </div>
 
-                {/* SMS Message Preview */}
-                <div className="bg-muted/50 p-4 rounded-lg border border-border">
-                  <p className="text-sm font-medium text-foreground mb-3">Nội dung tin nhắn {messageMethod === 'sms' ? 'SMS' : 'Zalo'}:</p>
-                  <div className="bg-background p-4 rounded border border-border text-sm text-foreground leading-relaxed">
-                    {`Bạn đã nhận được ${formData.points || '___'} Points từ Highland coffee. Hãy truy cập trang web https://example.com để nhận điểm.`}
-                  </div>
-                </div>
+                    {/* SMS Message Preview */}
+                    <div className="bg-muted/50 p-4 rounded-lg border border-border">
+                      <p className="text-sm font-medium text-foreground mb-3">Nội dung tin nhắn {messageMethod === 'sms' ? 'SMS' : 'Zalo'}:</p>
+                      <div className="bg-background p-4 rounded border border-border text-sm text-foreground leading-relaxed">
+                        {SMS_MESSAGE_TEMPLATE(formData.points || '___')}
+                      </div>
+                    </div>
               </div>
             </CardContent>
           </Card>
@@ -593,7 +598,7 @@ USR003,25000,Referral bonus`}
                     <div className="bg-muted/50 p-4 rounded-lg border border-border">
                       <p className="text-sm font-medium text-foreground mb-3">Nội dung tin nhắn {messageMethod === 'sms' ? 'SMS' : 'Zalo'}:</p>
                       <div className="bg-background p-4 rounded border border-border text-sm text-foreground leading-relaxed">
-                        {`Bạn đã nhận được Points từ Highland coffee. Hãy truy cập trang web https://example.com để nhận điểm.`}
+                        {SMS_MESSAGE_TEMPLATE('___')}
                       </div>
                     </div>
                   </div>
@@ -811,7 +816,7 @@ USR003,25000,Referral bonus`}
                     <div className="bg-muted/50 p-4 rounded-lg border border-border">
                       <p className="text-sm font-medium text-foreground mb-3">Nội dung tin nhắn {messageMethod === 'sms' ? 'SMS' : 'Zalo'}:</p>
                       <div className="bg-background p-4 rounded border border-border text-sm text-foreground leading-relaxed">
-                        {`Bạn đã nhận được ${formData.points || '___'} Points từ Highland coffee. Hãy truy cập trang web https://example.com để nhận điểm.`}
+                        {SMS_MESSAGE_TEMPLATE(formData.points || '___')}
                       </div>
                     </div>
                   </div>
@@ -1039,7 +1044,7 @@ USR003,25000,Referral bonus`}
                     <div className="bg-muted/50 p-4 rounded-lg border border-border">
                       <p className="text-sm font-medium text-foreground mb-3">Nội dung tin nhắn {messageMethod === 'sms' ? 'SMS' : 'Zalo'}:</p>
                       <div className="bg-background p-4 rounded border border-border text-sm text-foreground leading-relaxed">
-                        {`Bạn đã nhận được ${formData.points || '___'} Points từ Highland coffee. Hãy truy cập trang web https://example.com để nhận điểm.`}
+                        {SMS_MESSAGE_TEMPLATE(formData.points || '___')}
                       </div>
                     </div>
                   </div>
