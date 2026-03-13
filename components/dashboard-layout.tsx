@@ -27,6 +27,7 @@ const navigationItems = [
   { href: '/customer-groups', label: 'Nhóm Khách Hàng', icon: Users },
   { href: '/campaigns', label: 'Chiến dịch', icon: Zap },
   { href: '/wallet', label: 'Ví điểm', icon: CreditCard },
+  { href: '/cost-management', label: 'Quản lý chi phí tin nhắn', icon: CreditCard },
   { href: '/vouchers', label: 'Quản lý Voucher', icon: Gift },
   { href: '/reward-center', label: 'Quản lý điểm thưởng', icon: Gift },
   { href: '/hr', label: 'Nhân sự', icon: BarChart3 },
