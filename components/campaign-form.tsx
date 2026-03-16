@@ -142,7 +142,6 @@ export function CampaignForm() {
                 >
                   <option value="points">Points</option>
                   <option value="discount">Discount</option>
-                  <option value="freeproduct">Free Product</option>
                 </select>
               </div>
             </CardContent>
