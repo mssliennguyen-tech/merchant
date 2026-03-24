@@ -6,8 +6,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Plus, Edit2, MoreVertical, Trash2, Gift } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { GiftRewardsModal } from '@/components/gift-rewards-modal';
 
 export default function RewardsPage() {
+  const [giftModalOpen, setGiftModalOpen] = useState(false);
+  const [selectedReward, setSelectedReward] = useState<{ id: number; name: string } | null>(null);
+
   const [rewards] = useState([
     {
       id: 1,
@@ -186,6 +190,17 @@ export default function RewardsPage() {
                         <Button
                           variant="ghost"
                           size="sm"
+                          onClick={() => {
+                            setSelectedReward({ id: reward.id, name: reward.name });
+                            setGiftModalOpen(true);
+                          }}
+                          title="Tặng phần thưởng"
+                        >
+                          <Gift className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           asChild
                         >
                           <Link href={`/rewards/${reward.id}/edit`}>
@@ -215,6 +230,15 @@ export default function RewardsPage() {
           )}
         </CardContent>
       </Card>
+
+      {selectedReward && (
+        <GiftRewardsModal
+          open={giftModalOpen}
+          onOpenChange={setGiftModalOpen}
+          rewardName={selectedReward.name}
+          rewardId={selectedReward.id}
+        />
+      )}
     </DashboardLayout>
   );
 }

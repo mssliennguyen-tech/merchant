@@ -77,6 +77,8 @@ export default function CampaignsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCampaign, setSelectedCampaign] = useState<any>(null);
   const [showCloneModal, setShowCloneModal] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [campaignToDelete, setCampaignToDelete] = useState<number | null>(null);
 
   const filteredCampaigns = campaigns.filter(c => {
     const matchesStatus = !statusFilter || c.status === statusFilter;
@@ -112,27 +114,28 @@ export default function CampaignsPage() {
     toast.success('Chiến dịch đã được nhân bản thành công');
   };
 
-  const handleDelete = (id: number) => {
-    setCampaigns(campaigns.filter(c => c.id !== id));
-    toast.success('Chiến dịch đã được xóa');
+  const handleShowDeleteConfirm = (id: number) => {
+    setCampaignToDelete(id);
+    setShowDeleteConfirm(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (campaignToDelete) {
+      setCampaigns(campaigns.filter(c => c.id !== campaignToDelete));
+      toast.success('Chiến dịch đã được xóa');
+      setShowDeleteConfirm(false);
+      setCampaignToDelete(null);
+    }
   };
 
   return (
     <DashboardLayout>
       {/* Page header */}
-      <div className="mb-8 flex flex-col items-start justify-between md:flex-row md:items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Chiến dịch</h1>
-          <p className="text-muted-foreground mt-1">
-            Tạo và quản lý các chiến dịch khách hàng thân thiết của bạn
-          </p>
-        </div>
-        <Button asChild className="mt-4 md:mt-0 bg-primary hover:bg-primary/90">
-          <Link href="/campaigns/new" className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            Tạo chiến dịch
-          </Link>
-        </Button>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-foreground">Chiến dịch</h1>
+        <p className="text-muted-foreground mt-1">
+          Tạo và quản lý các chiến dịch khách hàng thân thiết của bạn
+        </p>
       </div>
 
       {/* Filters */}
@@ -308,7 +311,7 @@ export default function CampaignsPage() {
                             variant="ghost"
                             size="sm"
                             className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                            onClick={() => handleDelete(campaign.id)}
+                            onClick={() => handleShowDeleteConfirm(campaign.id)}
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -349,6 +352,33 @@ export default function CampaignsPage() {
               </Button>
               <Button onClick={confirmClone} className="bg-primary hover:bg-primary/90">
                 Xác nhận nhân bản
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Modal */}
+      <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Xóa chiến dịch</DialogTitle>
+            <DialogDescription>
+              Bạn có chắc chắn muốn xóa chiến dịch <strong>{campaigns.find(c => c.id === campaignToDelete)?.name}</strong>?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-3">
+              <p className="text-sm text-destructive font-medium">
+                Cảnh báo: Hành động này không thể được hoàn tác. Tất cả dữ liệu liên quan đến chiến dịch sẽ bị xóa.
+              </p>
+            </div>
+            <div className="flex gap-3 justify-end">
+              <Button variant="outline" onClick={() => setShowDeleteConfirm(false)}>
+                Hủy
+              </Button>
+              <Button onClick={handleConfirmDelete} className="bg-destructive hover:bg-destructive/90">
+                Xóa chiến dịch
               </Button>
             </div>
           </div>

@@ -13,10 +13,10 @@ export default function LoginPage() {
           <Link href="/" className="inline-flex items-center gap-2 mb-8">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
               <span className="text-lg font-bold text-primary-foreground">
-                MP
+                M
               </span>
             </div>
-            <span className="text-2xl font-bold text-foreground">MyPoint</span>
+            <span className="text-2xl font-bold text-foreground">Merchant Portal</span>
           </Link>
 
           {/* Heading */}

@@ -27,13 +27,13 @@ const navigationItems = [
   { href: '/customer-groups', label: 'Nhóm Khách Hàng', icon: Users },
   { href: '/campaigns', label: 'Chiến dịch', icon: Zap },
   { href: '/wallet', label: 'Ví điểm', icon: CreditCard },
+  { href: '/cost-management', label: 'Quản lý chi phí tin nhắn', icon: CreditCard },
   { href: '/vouchers', label: 'Quản lý Voucher', icon: Gift },
   { href: '/reward-center', label: 'Quản lý điểm thưởng', icon: Gift },
   { href: '/hr', label: 'Nhân sự', icon: BarChart3 },
   { href: '/transactions', label: 'Giao dịch', icon: CreditCard },
   { href: '/reports', label: 'Báo cáo', icon: FileText },
   { href: '/alerts', label: 'Cảnh báo', icon: AlertCircle },
-  { href: '/integrations', label: 'Tích hợp', icon: Settings },
 ];
 
 export function DashboardLayout({ children }: { children: ReactNode }) {
@@ -136,18 +136,18 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
             {/* Quick Action Buttons */}
             <div className="hidden sm:flex items-center gap-2">
               <Link href="/campaigns/new">
-                <Button size="sm" variant="outline" className="text-xs">
+                <Button size="sm" className="text-xs font-bold bg-primary hover:bg-primary/90 text-white">
                   + Chiến dịch
                 </Button>
               </Link>
               <Link href="/reward-center">
-                <Button size="sm" variant="outline" className="text-xs">
-                  Tặng phần thưởng
+                <Button size="sm" className="text-xs font-bold bg-primary hover:bg-primary/90 text-white">
+                  + Tặng phần thưởng
                 </Button>
               </Link>
               <Link href="/vouchers">
-                <Button size="sm" variant="outline" className="text-xs">
-                  + Phiếu mua
+                <Button size="sm" className="text-xs font-bold bg-primary hover:bg-primary/90 text-white">
+                  + Voucher
                 </Button>
               </Link>
             </div>
